@@ -7,7 +7,6 @@ async function getModelsFromPage({
 }: {
   page?: number
 }) {
-
   const res = await fetch(`${BASE_URL}/search?p=${page}`);
   const html = await res.text()
 
@@ -26,6 +25,18 @@ async function getModelsFromPage({
     prevPage: page > 1 ? page - 1 : null,
     nextPage: page < lastPage ? page + 1 : null,
   }
+}
+
+async function getAllModels() {
+  const { models: firstPageModels, lastPage } = await getModelsFromPage({});
+
+  const promises = Array
+    .from({ length: lastPage - 1 }, (_, i) => i + 2)
+    .map(page => getModelsFromPage({ page }));
+
+  const allModels = await Promise.all(promises).then(res => res.map(({ models }) => models).flat());
+
+  return [...firstPageModels, ...allModels]
 }
 
 async function getModelFromName({
@@ -76,5 +87,6 @@ async function getModelFromName({
 
 export {
   getModelsFromPage,
+  getAllModels,
   getModelFromName
 }
