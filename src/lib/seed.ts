@@ -7,14 +7,20 @@ await prisma.$connect();
 
 const models = await getAllModels();
 
-const result = await Promise.all(models.map(async name => {
+const result = await Promise.all(models.map(async (name, i) => {
   const model = await getModelFromName({ name });
   await prisma.model.upsert({
     where: {
       name: model.name
     },
-    update: model,
-    create: model
+    update: {
+      featPosition: i + 1,
+      ...model
+    },
+    create: {
+      featPosition: i + 1,
+      ...model
+    }
   });
 }));
 

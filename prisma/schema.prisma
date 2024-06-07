@@ -20,6 +20,7 @@ type Tag {
 
 model Model {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
+  featPosition  Int
   name          String @unique
   description   String
   pulls         String
