@@ -2,21 +2,30 @@
   "name": "ollama-models-api",
   "module": "./src/index.ts",
   "type": "module",
+  "prisma": {
+    "seed": "bun ./src/lib/seed.ts"
+  },
   "scripts": {
     "dev": "bun --watch ./src/index.ts",
-    "start": "bun ./src/index.ts"
+    "start": "bun ./src/index.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed"
   },
   "devDependencies": {
     "@eslint/js": "^9.4.0",
     "@types/bun": "latest",
     "eslint": "9.x",
     "globals": "^15.4.0",
+    "prisma": "^5.15.0",
     "typescript-eslint": "^7.12.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@prisma/client": "5.15.0",
     "cheerio": "^1.0.0-rc.12",
     "zod": "^3.23.8"
   }

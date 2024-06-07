@@ -44,7 +44,16 @@ async function getModelFromName({
 }: {
   name: string
 }) {
-  const res = await fetch(`${BASE_URL}/library/${name}`);
+
+  let url = BASE_URL;
+
+  if (name.includes('/')) {
+    url += `/${name}`;
+  } else {
+    url += `/library/${name}`;
+  }
+
+  const res = await fetch(url);
   const html = await res.text()
 
   const $ = cheerio.load(html);
@@ -62,15 +71,15 @@ async function getModelFromName({
   const system = systemRow.find('div').eq(1).text().trim();
 
   const primaryTags = $('#primary-tags').children().map((_, el) => {
-    const tagName = $(el).find('span').first().text().trim();
-    const tagSize = $(el).find('span').eq(-1).text().trim();
-    return { tagName, tagSize };
+    const name = $(el).find('span').first().text().trim();
+    const size = $(el).find('span').eq(-1).text().trim();
+    return { name, size };
   }).get();
 
   const secondaryTags = $('#secondary-tags').children().map((_, el) => {
-    const tagName = $(el).find('span').first().text().trim();
-    const tagSize = $(el).find('span').eq(-1).text().trim();
-    return { tagName, tagSize };
+    const name = $(el).find('span').first().text().trim();
+    const size = $(el).find('span').eq(-1).text().trim();
+    return { name, size };
   }).get();
 
   return {
