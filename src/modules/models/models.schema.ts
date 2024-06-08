@@ -1,8 +1,14 @@
 import * as z from 'zod';
 
-const getModelByNameQuerySchema = z.object({
+const getModelByNameParamsSchema = z.object({
   first: z.string().describe("The name of the model or the publisher using the format 'publisher/model'"),
   second: z.string().nullable().describe("The name of the model using the format 'publisher/model'")
+});
+
+const searchModelsQuerySchema = z.object({
+  q: z.string().nullable().describe("The search query"),
+  p: z.coerce.number().min(1).default(1).describe("The page number"),
+  n: z.coerce.number().min(1).max(50).default(10).describe("The number of items per page"),
 });
 
 const tagSchema = z.object({
@@ -10,7 +16,7 @@ const tagSchema = z.object({
   size: z.string(),
 });
 
-const modelSchema = z.object({
+const baseModelSchema = z.object({
   id: z.string(),
   featPosition: z.number(),
   name: z.string(),
@@ -18,9 +24,20 @@ const modelSchema = z.object({
   pulls: z.string(),
   lastUpdate: z.string(),
   family: z.string(),
-  system: z.string(),
+  system: z.string()
+});
+
+const modelSchema = baseModelSchema.extend({
   primaryTags: z.array(tagSchema),
   secondaryTags: z.array(tagSchema)
+});
+
+const searchModelResponseSchema = z.object({
+  total: z.number(),
+  pages: z.number(),
+  nextPage: z.number().nullable(),
+  prevPage: z.number().nullable(),
+  models: z.array(baseModelSchema)
 });
 
 const errorSchema = z.object({
@@ -28,7 +45,9 @@ const errorSchema = z.object({
 });
 
 export {
-  getModelByNameQuerySchema,
+  getModelByNameParamsSchema,
+  searchModelsQuerySchema,
   modelSchema,
+  searchModelResponseSchema,
   errorSchema
 }
