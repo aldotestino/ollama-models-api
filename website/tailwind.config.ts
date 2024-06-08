@@ -63,6 +63,11 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
+        'border-beam': {
+          '100%': {
+            'offset-distance': '100%',
+          },
+        },
         'shimmer': {
           '0%, 90%, 100%': {
             'background-position': 'calc(-100% - var(--shimmer-width)) 0',
@@ -85,6 +90,7 @@ const config = {
         },
       },
       animation: {
+        'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
         'shimmer': 'shimmer 8s infinite',
         'shine': 'shine 8s ease-in-out infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
