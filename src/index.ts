@@ -1,18 +1,17 @@
-import { PrismaClient } from "@prisma/client";
+import { createApi } from "@/api";
+import env from "@/lib/env";
 
-const primsa = new PrismaClient();
+const app = createApi({
+  logger: true
+});
 
-const firstModels = await primsa.model.findMany({
-  orderBy: {
-    featPosition: 'asc'
-  },
-  take: 5,
-  select: {
-    featPosition: true,
-    name: true,
-    family: true,
-    description: true
+async function start() {
+  try {
+    await app.listen({ port: env.PORT, host: "0.0.0.0" });
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
   }
-})
+}
 
-console.log(firstModels);
+start();
