@@ -11,7 +11,7 @@ function Header() {
           <Link href='/' passHref legacyBehavior>
             <Logo className='w-8 h-8' />
           </Link>
-          <h1 className='font-semibold text-xl'>Ollama Models Api</h1>
+          <h1 className='hidden sm:block font-semibold text-xl'>Ollama Models Api</h1>
         </div>
         <Link href="http://localhost:8080/docs" target='_blank' className={buttonVariants({ size: 'sm', variant: 'gooeyRight' })}>
           <Book className='w-4 h-4 mr-2' />

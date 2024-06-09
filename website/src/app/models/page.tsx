@@ -1,13 +1,22 @@
-function ModelsPage() {
+import { createUrl } from '@/lib/utils';
+import { columns } from './columns';
+import { DataTable } from './data-table';
+
+async function ModelsPage({ searchParams }: {
+  searchParams: {
+    q: string;
+    p: number;
+    n: number;
+  }
+}) {
+
+  const res = await fetch(createUrl(searchParams));
+  const data = await res.json();
+  
   return (
     <div className="h-full overflow-y-auto">
-      <div className="container max-w-screen-lg">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} className='p-4 border-b'>
-            <h2 className='font-semibold text-lg'>Model {i + 1}</h2>
-            <p className='text-gray-500'>This is a model description</p>
-          </div>
-        ))}
+      <div className="container max-w-screen-lg p-10">
+        <DataTable columns={columns} data={data.models} />
       </div>
     </div>
   );
