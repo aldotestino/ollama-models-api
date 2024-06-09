@@ -8,7 +8,7 @@ function Header() {
     <header className='border-b py-4'>
       <div className='container max-w-screen-lg flex items-center justify-between'>
         <div className='flex items-center gap-2'>
-          <Link href='/' passHref legacyBehavior>
+          <Link href='/'>
             <Logo className='w-8 h-8' />
           </Link>
           <h1 className='hidden sm:block font-semibold text-xl'>Ollama Models Api</h1>
