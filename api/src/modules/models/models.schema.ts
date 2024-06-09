@@ -6,7 +6,7 @@ const getModelByNameParamsSchema = z.object({
 });
 
 const searchModelsQuerySchema = z.object({
-  q: z.string().nullable().describe("The search query"),
+  q: z.string().default("").describe("The search query"),
   p: z.coerce.number().min(1).default(1).describe("The page number"),
   n: z.coerce.number().min(1).max(50).default(10).describe("The number of items per page"),
 });
