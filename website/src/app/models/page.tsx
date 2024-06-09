@@ -1,6 +1,7 @@
 import { createUrl } from '@/lib/utils';
 import { columns } from './columns';
 import { DataTable } from './data-table';
+import { ModelsSearchResponse } from '@/lib/types';
 
 async function ModelsPage({ searchParams }: {
   searchParams: {
@@ -16,12 +17,19 @@ async function ModelsPage({ searchParams }: {
       tags: ['models'],
     }
   });
-  const data = await res.json();
+  const data: ModelsSearchResponse = await res.json();
   
   return (
     <div className="h-full overflow-y-auto">
       <div className="container max-w-screen-lg p-10">
-        <DataTable columns={columns} data={data.models} />
+        <DataTable 
+          columns={columns} 
+          data={data.models} 
+          total={data.total} 
+          pages={data.pages} 
+          nextPage={data.nextPage}
+          prevPage={data.prevPage} 
+        />
       </div>
     </div>
   );

@@ -17,6 +17,10 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '@/lib/hooks';
+import { useRouter } from 'next/navigation';
+import { ModelsSearchResponse } from '@/lib/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -24,23 +28,40 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
+  total,
+  pages,
+  nextPage,
+  prevPage,
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue> & Pick<ModelsSearchResponse, 'total' | 'pages' | 'nextPage' | 'prevPage'>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 500);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(`/models?q=${debouncedQuery}`);
+  }, [debouncedQuery, router]);
+
   return (
     <div>
-      <div className="flex items-center relative py-4">
-        <Search className="absolute left-2 w-4 h-4 text-muted-foreground" />
-        <Input
-          placeholder="Filter by name..."
-          className="max-w-xs pl-8 w-full"
-        />
+      <div className="flex flex-col sm:flex-row items-center py-4 gap-4">
+        <div className='flex items-center relative w-full sm:max-w-72'>
+          <Search className="absolute left-2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Filter by name..."
+            className="pl-8"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <p className='text-left w-full font-semibold text-muted-foreground'>{total} models found.</p>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -86,6 +107,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      
     </div>
   );
 }

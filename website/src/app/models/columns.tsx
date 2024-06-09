@@ -1,19 +1,9 @@
 'use client';
 
+import { BaseModel } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Boxes, Clock3, Download } from 'lucide-react';
 import Link from 'next/link';
-
-type BaseModel = {
-  id: string;
-  featPosition: number
-  name: string;
-  description: string;
-  pulls: string;
-  lastUpdate: string;
-  family: string;
-  system: string;
-}
 
 export const columns: ColumnDef<BaseModel>[] = [
   {
