@@ -10,7 +10,12 @@ async function ModelsPage({ searchParams }: {
   }
 }) {
 
-  const res = await fetch(createUrl(searchParams));
+  const res = await fetch(createUrl(searchParams), {
+    next: {
+      revalidate: 3600,
+      tags: ['models'],
+    }
+  });
   const data = await res.json();
   
   return (

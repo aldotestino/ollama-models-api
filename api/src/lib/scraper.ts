@@ -59,7 +59,8 @@ async function getModelFromName({
   const $ = cheerio.load(html);
 
   const description = $('body > div > main > section.flex.flex-col > h2').text().trim();
-  const pulls = $('body > div > main > section.flex.flex-col > p > span:nth-child(1)').text().trim().split('\n')[0];
+  const pullsSpan = $('body > div > main > section.flex.flex-col > p > span:nth-child(1)').text().trim()
+  const pulls = pullsSpan.toLowerCase().includes('pull') ? pullsSpan.split('/n')[0] : '0 Pulls';
   const lastUpdate = $('#updated').text().trim().replace('Updated ', '');
 
   const fileExplorer = $('#file-explorer > section > div > div')
