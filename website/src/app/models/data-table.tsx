@@ -19,8 +19,9 @@ import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDebounce } from '@/lib/hooks';
-import { useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ModelsSearchResponse } from '@/lib/types';
+import Paginator from './paginator';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -42,16 +43,23 @@ export function DataTable<TData, TValue>({
   });
 
   const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 500);
-  const router = useRouter();
+  
+  // const debouncedQuery = useDebounce(query, 500);
+  // const searchParams = useSearchParams();
+  // const router = useRouter();
 
-  useEffect(() => {
-    router.push(`/models?q=${debouncedQuery}`);
-  }, [debouncedQuery, router]);
+  // useEffect(() => {
+  //   const prevQuery = searchParams.get('q');
+  //   if (debouncedQuery !== prevQuery) {
+  //     const newSearchParams = new URLSearchParams();
+  //     newSearchParams.set('q', debouncedQuery);
+  //     router.push(`/models?${newSearchParams.toString()}`);
+  //   }
+  // }, [debouncedQuery, router, searchParams]);
 
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row items-center py-4 gap-4">
+    <div className='space-y-4'>
+      <div className="flex flex-col sm:flex-row items-center gap-4">
         <div className='flex items-center relative w-full sm:max-w-72'>
           <Search className="absolute left-2 w-4 h-4 text-muted-foreground" />
           <Input
@@ -107,7 +115,9 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      
+      <div className='flex justify-end'>
+        <Paginator pages={pages} nextPage={nextPage} prevPage={prevPage} />
+      </div>
     </div>
   );
 }
