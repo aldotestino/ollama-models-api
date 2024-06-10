@@ -6,7 +6,7 @@ import { errorSchema, getModelByNameParamsSchema, modelSchema, searchModelRespon
 
 const modelsPlugin: FastifyPluginCallbackZod = (fastify, _, done) => {
 
-  fastify.get("/:first/:second", {
+  fastify.get("/:first/:second?", {
     schema: {
       description: "Get a model by name",
       tags: ["models"],

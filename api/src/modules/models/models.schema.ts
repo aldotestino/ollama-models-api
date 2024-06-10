@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 const getModelByNameParamsSchema = z.object({
   first: z.string().describe("The name of the model or the publisher using the format 'publisher/model'"),
-  second: z.string().nullable().describe("The name of the model using the format 'publisher/model'")
+  second: z.string().optional().describe("The name of the model using the format 'publisher/model'")
 });
 
 const searchModelsQuerySchema = z.object({

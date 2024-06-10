@@ -9,6 +9,16 @@ export type BaseModel = {
   system: string;
 };
 
+export type Tag = {
+  name: string;
+  size: string;
+}
+
+export type Model = BaseModel & {
+  primaryTags: Tag[]
+  secondaryTags: Tag[]
+}
+
 export type ModelsSearchResponse = {
   total: number;
   pages: number;
