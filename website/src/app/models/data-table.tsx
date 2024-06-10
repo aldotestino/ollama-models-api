@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDebounce } from '@/lib/hooks';
-import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ModelsSearchResponse } from '@/lib/types';
 import Paginator from './paginator';
 
@@ -31,31 +31,36 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   total,
   pages,
+  currentPage = 1,
+  currentQuery = '',
   nextPage,
   prevPage,
   columns,
   data,
-}: DataTableProps<TData, TValue> & Pick<ModelsSearchResponse, 'total' | 'pages' | 'nextPage' | 'prevPage'>) {
+}: DataTableProps<TData, TValue> & Pick<ModelsSearchResponse, 'total' | 'pages' | 'nextPage' | 'prevPage'> & {
+  currentPage?: number
+  currentQuery?: string
+}) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(currentQuery);
   
-  // const debouncedQuery = useDebounce(query, 500);
-  // const searchParams = useSearchParams();
-  // const router = useRouter();
+  const debouncedQuery = useDebounce(query, 500);
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   const prevQuery = searchParams.get('q');
-  //   if (debouncedQuery !== prevQuery) {
-  //     const newSearchParams = new URLSearchParams();
-  //     newSearchParams.set('q', debouncedQuery);
-  //     router.push(`/models?${newSearchParams.toString()}`);
-  //   }
-  // }, [debouncedQuery, router, searchParams]);
+  useEffect(() => {
+    if (debouncedQuery !== currentQuery) {
+      if(debouncedQuery === '') {
+        router.push('/models');
+      } else {
+        router.push(`/models?q=${debouncedQuery}`);
+      }
+    }
+  }, [debouncedQuery, currentQuery, router]);
 
   return (
     <div className='space-y-4'>
@@ -115,8 +120,14 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className='flex justify-end'>
-        <Paginator pages={pages} nextPage={nextPage} prevPage={prevPage} />
+      <div className='flex justify-center sm:justify-end'>
+        <Paginator 
+          pages={pages} 
+          currentPage={currentPage}
+          currentQuery={currentQuery}
+          nextPage={nextPage} 
+          prevPage={prevPage} 
+        />
       </div>
     </div>
   );

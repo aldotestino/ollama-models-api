@@ -29,6 +29,8 @@ async function ModelsPage({ searchParams }: {
           pages={data.pages} 
           nextPage={data.nextPage}
           prevPage={data.prevPage} 
+          currentPage={searchParams.p}
+          currentQuery={searchParams.q}
         />
       </div>
     </div>

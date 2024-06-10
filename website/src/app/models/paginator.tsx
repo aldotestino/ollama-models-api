@@ -1,66 +1,58 @@
 import { ModelsSearchResponse } from '@/lib/types';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { cn } from '@/lib/utils';
 
 function Paginator({
   pages,
+  currentPage,
   prevPage,
   nextPage,
-}: Pick<ModelsSearchResponse, 'pages' | 'nextPage' | 'prevPage'>) {
+  currentQuery
+}: Pick<ModelsSearchResponse, 'pages' | 'nextPage' | 'prevPage'> & {
+  currentPage: number
+  currentQuery: string
+}) {
 
-  const currentPage = nextPage ? nextPage - 1 : prevPage ? prevPage + 1 : 1;
+  const currentPageLink = currentQuery ? `/models?q=${currentQuery}&p=${currentPage}` : `/models?p=${currentPage}`;
+  const firstPageLink = currentQuery ? `/models?q=${currentQuery}&p=1` : '/models?p=1';
+  const lastPageLink = currentQuery ? `/models?q=${currentQuery}&p=${pages}` : `/models?p=${pages}`;
+  const prevPageLink = currentQuery ? `/models?q=${currentQuery}&p=${prevPage}` : `/models?p=${prevPage}`;
+  const nextPageLink = currentQuery ? `/models?q=${currentQuery}&p=${nextPage}` : `/models?p=${nextPage}`;
 
   return (
     <Pagination className='w-fit mx-0'>
       <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href={prevPageLink} className={cn(!prevPage && 'pointer-events-none opacity-50')} />
+        </PaginationItem>
         {prevPage && 
-          <PaginationItem>
-            <PaginationPrevious href={`/models?p=${prevPage}`} />
+          <PaginationItem className='hidden sm:block'>
+            <PaginationLink href={firstPageLink}>1</PaginationLink>
           </PaginationItem>
         }
-        {prevPage && 
-          <PaginationItem>
-            <PaginationLink href="/models?p=1">1</PaginationLink>
-          </PaginationItem>
-        }
-        {prevPage && (prevPage - 1 !== 1 && prevPage !== 1) && 
-          <PaginationItem>
+        {prevPage && (prevPage !== 1) && 
+          <PaginationItem className='hidden sm:block'>
             <PaginationEllipsis />
-          </PaginationItem>
-        }
-        {prevPage && prevPage !== 1 &&
-          <PaginationItem>
-            <PaginationLink href={`/models?p=${prevPage}`}>
-              {prevPage}
-            </PaginationLink>
           </PaginationItem>
         }
         <PaginationItem>
-          <PaginationLink href={`/models?p=${currentPage}`} isActive>
+          <PaginationLink href={currentPageLink} isActive>
             {currentPage}
           </PaginationLink>
         </PaginationItem>
-        {nextPage && nextPage !== pages &&
-          <PaginationItem>
-            <PaginationLink href={`/models?p=${nextPage}`}>
-              {nextPage}
-            </PaginationLink>
-          </PaginationItem>
-        }
-        {nextPage && (nextPage + 1 !== pages && nextPage !== pages) &&
-          <PaginationItem>
+        {nextPage && (nextPage !== pages) &&
+          <PaginationItem className='hidden sm:block'>
             <PaginationEllipsis />
           </PaginationItem>
         }
         {nextPage && 
-          <PaginationItem>
-            <PaginationLink href={`/models?p=${pages}`}>{pages}</PaginationLink>
+          <PaginationItem className='hidden sm:block'>
+            <PaginationLink href={lastPageLink}>{pages}</PaginationLink>
           </PaginationItem>
         }
-        {nextPage && 
-          <PaginationItem>
-            <PaginationNext href={`/models?p=${nextPage}`} />
-          </PaginationItem>
-        }
+        <PaginationItem>
+          <PaginationNext href={nextPageLink} className={cn(!nextPage && 'pointer-events-none opacity-50')} />
+        </PaginationItem>
       </PaginationContent>
     </Pagination>
   );
