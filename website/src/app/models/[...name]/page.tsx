@@ -8,21 +8,26 @@ import Link from 'next/link';
 
 async function ModelPage({ params }: {params: {name: [string, string?]}}) {
 
-  const res = await fetch(`http://localhost:8080/api/v1/models/${params.name.join('/')}`);
+  const res = await fetch(`http://localhost:8080/api/v1/models/${params.name.join('/')}`, {
+    next: {
+      revalidate: 3600,
+      tags: ['models'],
+    }
+  });
   const model: Model = await res.json();
 
   return (
     <div className="h-full overflow-y-auto">
       <div className="container max-w-screen-lg p-10 space-y-6">
         <div className='space-y-2'>
-          <Badge>{model.family}</Badge>
-          <Link href="#" target='_blank' className='block hover:underline font-bold text-2xl sm:text-4xl'>{model.name}</Link>
+          {model.family && <Badge>{model.family}</Badge>}
+          <Link href={model.url} target='_blank' className='block hover:underline font-bold text-2xl sm:text-4xl'>{model.name}</Link>
           {model.description && <p className='text-muted-foreground max-w-prose'>{model.description}</p>}
         </div>
         <div className='flex flex-row items-center gap-4'>
           <div className='flex items-center gap-1 text-muted-foreground font-semibold'>
             <Download className='w-4 h-4' />
-            <span>{model.pulls}</span>
+            <span>{model.pulls} Pulls</span>
           </div>
           <div className='flex items-center gap-1 text-muted-foreground font-semibold'>
             <Clock3 className='w-4 h-4' />

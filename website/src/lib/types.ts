@@ -2,6 +2,7 @@ export type BaseModel = {
   id: string;
   featPosition: number
   name: string;
+  url: string;
   description: string;
   pulls: string;
   lastUpdate: string;

@@ -20,6 +20,7 @@ const baseModelSchema = z.object({
   id: z.string(),
   featPosition: z.number(),
   name: z.string(),
+  url: z.string().url(),
   description: z.string(),
   pulls: z.string(),
   lastUpdate: z.string(),

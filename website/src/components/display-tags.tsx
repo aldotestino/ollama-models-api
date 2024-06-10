@@ -23,7 +23,7 @@ function DisplayTags({
   secondaryTags
 }: Pick<Model, 'name' | 'primaryTags' | 'secondaryTags'>) {
 
-  const [tag, setTag] = useState(primaryTags[0].name);
+  const [tag, setTag] = useState(primaryTags[0]?.name || secondaryTags[0]?.name || '');
   const [copied, setCopied] = useState(false);
 
   const command = useMemo(() => `ollama run ${name}:${tag}`, [name, tag]);
@@ -39,23 +39,27 @@ function DisplayTags({
   return (
     <div className='flex flex-col gap-2 sm:flex-row sm:gap-4 items-center justify-between'>
       <div className='flex w-full sm:w-fit items-center gap-4'>
-        <Select defaultValue={primaryTags[0].name} value={tag} onValueChange={setTag}>
+        <Select defaultValue={primaryTags[0]?.name} value={tag} onValueChange={setTag}>
           <SelectTrigger className="flex-1 sm:flex-none sm:w-[220px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Primary Tags</SelectLabel>
-              {primaryTags.map(t => (
-                <SelectItemWithSideText key={t.name} value={t.name} sideText={t.size}>{t.name}</SelectItemWithSideText>
-              ))}
-            </SelectGroup>
-            {secondaryTags.length > 0 && <SelectGroup>
-              <SelectLabel>Secondary Tags</SelectLabel>
-              {secondaryTags.map(t => (
-                <SelectItemWithSideText key={t.name} value={t.name} sideText={t.size}>{t.name}</SelectItemWithSideText>
-              ))}
-            </SelectGroup>}
+            {primaryTags.length > 0 && 
+              <SelectGroup>
+                <SelectLabel>Primary Tags</SelectLabel>
+                {primaryTags.map(t => (
+                  <SelectItemWithSideText key={t.name} value={t.name} sideText={t.size}>{t.name}</SelectItemWithSideText>
+                ))}
+              </SelectGroup>
+            }
+            {secondaryTags.length > 0 && 
+              <SelectGroup>
+                <SelectLabel>Secondary Tags</SelectLabel>
+                {secondaryTags.map(t => (
+                  <SelectItemWithSideText key={t.name} value={t.name} sideText={t.size}>{t.name}</SelectItemWithSideText>
+                ))}
+              </SelectGroup>
+            }
           </SelectContent>
         </Select>
         <div className='flex items-center gap-1 text-muted-foreground font-semibold'>

@@ -68,6 +68,7 @@ const modelsPlugin: FastifyPluginCallbackZod = (fastify, _, done) => {
         id: true,
         featPosition: true,
         name: true,
+        url: true,
         description: true,
         pulls: true,
         lastUpdate: true,
