@@ -1,16 +1,41 @@
+import DisplayTags from '@/components/display-tags';
+import { Badge } from '@/components/ui/badge';
 import { Model } from '@/lib/types';
+import { Label } from '@/components/ui/label';
+import { Clock3, Download } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import Link from 'next/link';
 
 async function ModelPage({ params }: {params: {name: [string, string?]}}) {
-
-  console.log(params.name, params.name.join('/'));
 
   const res = await fetch(`http://localhost:8080/api/v1/models/${params.name.join('/')}`);
   const model: Model = await res.json();
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="container max-w-screen-lg p-10">
-        <h1>{model.name}</h1>
+      <div className="container max-w-screen-lg p-10 space-y-6">
+        <div className='space-y-2'>
+          <Badge>{model.family}</Badge>
+          <Link href="#" target='_blank' className='block hover:underline font-bold text-2xl sm:text-4xl'>{model.name}</Link>
+          {model.description && <p className='text-muted-foreground max-w-prose'>{model.description}</p>}
+        </div>
+        <div className='flex flex-row items-center gap-4'>
+          <div className='flex items-center gap-1 text-muted-foreground font-semibold'>
+            <Download className='w-4 h-4' />
+            <span>{model.pulls}</span>
+          </div>
+          <div className='flex items-center gap-1 text-muted-foreground font-semibold'>
+            <Clock3 className='w-4 h-4' />
+            <span>{model.lastUpdate}</span>
+          </div>
+        </div>
+        <DisplayTags primaryTags={model.primaryTags} secondaryTags={model.secondaryTags} name={model.name} />
+        {model.system && 
+          <div className='space-y-2'>
+            <Label>System Prompt</Label>
+            <Textarea className='w-full h-96 font-mono text-muted-foreground focus-visible:ring-transparent' defaultValue={model.system} readOnly />
+          </div>
+        }
       </div>
     </div>
   );
