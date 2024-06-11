@@ -22,6 +22,7 @@ import { useDebounce } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { ModelsSearchResponse } from '@/lib/types';
 import Paginator from './paginator';
+import NumberTicker from '@/components/magicui/number-ticker';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -74,7 +75,8 @@ export function DataTable<TData, TValue>({
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <p className='text-left w-full font-semibold text-muted-foreground'>{total} models found.</p>
+        <p className='text-left w-full font-semibold text-muted-foreground'>
+          <NumberTicker value={total} className='text-muted-foreground dark:text-muted-foreground' /> models found.</p>
       </div>
       <div className="rounded-md border">
         <Table>

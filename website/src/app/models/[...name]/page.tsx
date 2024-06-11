@@ -6,6 +6,8 @@ import { Clock3, Download } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 import env from '@/lib/env';
+import { buttonVariants } from '@/components/ui/button';
+import BackButton from '@/components/back-button';
 
 async function ModelPage({ params }: {params: {name: [string, string?]}}) {
 
@@ -42,6 +44,7 @@ async function ModelPage({ params }: {params: {name: [string, string?]}}) {
             <Textarea className='w-full h-96 font-mono text-muted-foreground focus-visible:ring-transparent' defaultValue={model.system} readOnly />
           </div>
         }
+        <BackButton />
       </div>
     </div>
   );

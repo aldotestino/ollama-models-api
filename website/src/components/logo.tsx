@@ -1,6 +1,8 @@
+import { cn } from '@/lib/utils';
+
 function Logo({ className }: {className?: string}) {
   return (
-    <svg className={className} version="1.0" xmlns="http://www.w3.org/2000/svg"
+    <svg className={cn('fill-foreground', className)} version="1.0" xmlns="http://www.w3.org/2000/svg"
       width="181.000000pt" height="256.000000pt" viewBox="0 0 181.000000 256.000000"
       preserveAspectRatio="xMidYMid meet">
 

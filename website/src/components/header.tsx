@@ -1,6 +1,7 @@
 import Logo from './logo';
 import Link from 'next/link';
 import DocsButton from './docs-button';
+import { ThemeToggle } from './theme-toggle';
 
 function Header() {
   return (
@@ -12,7 +13,10 @@ function Header() {
           </Link>
           <h1 className='hidden sm:block font-semibold text-xl'>Ollama Models Api</h1>
         </div>
-        <DocsButton className='w-fit' size="sm" />
+        <div className='flex items-center gap-2'>
+          <DocsButton className='w-fit' size="sm" />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
