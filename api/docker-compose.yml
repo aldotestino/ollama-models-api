@@ -1,0 +1,8 @@
+services:
+  api:
+    build: .
+    container_name: ollama-models-api_api
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:8080"
