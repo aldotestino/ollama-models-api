@@ -5,6 +5,8 @@ const prisma = new PrismaClient();
 
 await prisma.$connect();
 
+await prisma.model.deleteMany({});
+
 const models = await getAllModels();
 
 const result = await Promise.all(models.map(async (name, i) => {
