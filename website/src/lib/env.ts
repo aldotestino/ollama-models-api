@@ -2,7 +2,7 @@ import { ZodError, z } from 'zod';
 
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  NEXT_PUBLIC_API_URL: z.string().default('http://localhost:8080'),
+  NEXT_PUBLIC_API_URL: z.string()
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;
