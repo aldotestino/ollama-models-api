@@ -1,7 +1,7 @@
 services:
-  api:
+  ollama-models-api:
     build: .
-    container_name: ollama-models-api_api
+    container_name: ollama-models-api
     env_file:
       - .env
     ports:

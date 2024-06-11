@@ -5,27 +5,23 @@ const prisma = new PrismaClient();
 
 await prisma.$connect();
 
+console.log('🗑️ Removing models...');
 await prisma.model.deleteMany({});
 
-const models = await getAllModels();
+console.log('📦 Getting models...');
+const modelNames = await getAllModels();
 
-const result = await Promise.all(models.map(async (name, i) => {
+console.log('📄 Getting full models information...')
+const models = await Promise.all(modelNames.map(async (name, i) => {
   const model = await getModelFromName({ name });
-  await prisma.model.upsert({
-    where: {
-      name: model.name
-    },
-    update: {
-      featPosition: i + 1,
-      ...model
-    },
-    create: {
-      featPosition: i + 1,
-      ...model
-    }
-  });
+  return { ...model, featPosition: i + 1 };
 }));
+
+console.log('🌱 Seeding models...');
+const result = await prisma.model.createMany({
+  data: models
+});
 
 await prisma.$disconnect();
 
-console.log(`🌱 ${result.length} models seeded.`);
+console.log(`🌱 ${result.count} models seeded.`);
