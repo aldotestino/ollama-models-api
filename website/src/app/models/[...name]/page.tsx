@@ -5,13 +5,12 @@ import { Label } from '@/components/ui/label';
 import { Clock3, Download } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
-import env from '@/lib/env';
-import { buttonVariants } from '@/components/ui/button';
 import BackButton from '@/components/back-button';
+import { API_URL } from '@/lib/constants';
 
 async function ModelPage({ params }: {params: {name: [string, string?]}}) {
 
-  const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/api/v1/models/${params.name.join('/')}`, {
+  const res = await fetch(`${API_URL}/api/v1/models/${params.name.join('/')}`, {
     next: {
       revalidate: 3600,
       tags: ['models'],
