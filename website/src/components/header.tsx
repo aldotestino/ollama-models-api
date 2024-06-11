@@ -1,7 +1,6 @@
 import Logo from './logo';
 import Link from 'next/link';
-import { buttonVariants } from './ui/button';
-import { Book } from 'lucide-react';
+import DocsButton from './docs-button';
 
 function Header() {
   return (
@@ -13,10 +12,7 @@ function Header() {
           </Link>
           <h1 className='hidden sm:block font-semibold text-xl'>Ollama Models Api</h1>
         </div>
-        <Link href="http://localhost:8080/docs" target='_blank' className={buttonVariants({ size: 'sm', variant: 'gooeyRight' })}>
-          <Book className='w-4 h-4 mr-2' />
-          <span>Read the docs</span>
-        </Link>
+        <DocsButton className='w-fit' size="sm" />
       </div>
     </header>
   );

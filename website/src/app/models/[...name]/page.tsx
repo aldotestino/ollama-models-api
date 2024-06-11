@@ -5,10 +5,11 @@ import { Label } from '@/components/ui/label';
 import { Clock3, Download } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
+import env from '@/lib/env';
 
 async function ModelPage({ params }: {params: {name: [string, string?]}}) {
 
-  const res = await fetch(`http://localhost:8080/api/v1/models/${params.name.join('/')}`, {
+  const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/api/v1/models/${params.name.join('/')}`, {
     next: {
       revalidate: 3600,
       tags: ['models'],

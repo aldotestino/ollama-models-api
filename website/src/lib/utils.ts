@@ -1,12 +1,13 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import env from './env';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function createUrl(searchParams: { q?: string, p?: number, n?: number }) {
-  const baseUrl = 'http://localhost:8080/api/v1/models/search';
+  const baseUrl = `${env.NEXT_PUBLIC_API_URL}/api/v1/models/search`;
 
   const urlSearchParams = new URLSearchParams();
   if (searchParams.q) urlSearchParams.append('q', searchParams.q);

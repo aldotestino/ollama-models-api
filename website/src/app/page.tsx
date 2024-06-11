@@ -5,9 +5,10 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import DocsImage from '@/assets/docs.png';
-import { ArrowRightIcon, Book } from 'lucide-react';
+import { ArrowRightIcon } from 'lucide-react';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import DotPattern from '@/components/magicui/dot-pattern';
+import DocsButton from '@/components/docs-button';
 
 export default function Home() {
   return (
@@ -43,10 +44,7 @@ export default function Home() {
           <Link href="https://github.com/aldotestino/ollama-models-api" target='_blank' className={buttonVariants({ variant: 'outline', className: 'w-full' })}>
             Support on GitHub
           </Link>
-          <Link href="http://localhost:8080/docs" target='_blank' className={buttonVariants({ variant: 'gooeyRight', className: 'w-full' })}>
-            <Book className='w-4 h-4 mr-2' />
-            <span>Read the docs</span>
-          </Link>
+          <DocsButton />
         </div>
       </div>
       <DotPattern
