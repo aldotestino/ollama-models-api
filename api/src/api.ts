@@ -6,13 +6,15 @@ import apiDocsPlugin from "./lib/api-docs";
 import { errorHandler } from "./lib/errors";
 import modelsPlugin from "./modules/models/models.plugin";
 
-export function createApi(fastifyOpts: FastifyHttpOptions<Server, FastifyBaseLogger>) {
+export function createApi(fastifyOpts?: FastifyHttpOptions<Server, FastifyBaseLogger>) {
   const fastify = Fastify(fastifyOpts);
 
   fastify.setValidatorCompiler(validatorCompiler);
   fastify.setSerializerCompiler(serializerCompiler);
 
   fastify.register(apiDocsPlugin);
+
+  fastify.get("/", () => ({ message: "Welcome to Ollama Models API! 🦙🚀" }))
 
   fastify.register(modelsPlugin, { prefix: "/api/v1/models" })
 

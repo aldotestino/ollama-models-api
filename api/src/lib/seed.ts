@@ -1,4 +1,4 @@
-import { getAllModels, getModelFromName } from '@/lib/scraper';
+import { getAllModels, getModelFromName } from './scraper';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();

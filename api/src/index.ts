@@ -1,5 +1,5 @@
-import { createApi } from "@/api";
-import env from "@/lib/env";
+import { createApi } from "./api";
+import env from "./lib/env";
 
 const app = createApi({
   logger: true

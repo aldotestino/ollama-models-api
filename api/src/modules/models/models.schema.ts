@@ -1,4 +1,4 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 const getModelByNameParamsSchema = z.object({
   first: z.string().describe("The name of the model or the publisher using the format 'publisher/model'"),

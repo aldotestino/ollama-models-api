@@ -1,6 +1,6 @@
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
-import prisma from "@/lib/db";
-import { createApiError } from "@/lib/errors";
+import prisma from "../../lib/db";
+import { createApiError } from "../../lib/errors";
 import { StatusCodes } from "http-status-codes";
 import { errorSchema, getModelByNameParamsSchema, modelSchema, searchModelResponseSchema, searchModelsQuerySchema } from "./models.schema";
 

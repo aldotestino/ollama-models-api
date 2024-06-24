@@ -1,7 +1,5 @@
 {
   "name": "ollama-models-api",
-  "module": "./src/index.ts",
-  "type": "module",
   "prisma": {
     "seed": "bun ./src/lib/seed.ts"
   },
