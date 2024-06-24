@@ -1,7 +1,8 @@
 import fp from "fastify-plugin";
 import fastifySwagger from "@fastify/swagger";
 import { jsonSchemaTransform } from "fastify-type-provider-zod";
-import scalarApiReference from "@scalar/fastify-api-reference";
+// import scalarApiReference from "@scalar/fastify-api-reference";
+import fastifySwaggerUI from "@fastify/swagger-ui";
 
 const apiDocsPlugin = fp((fastify, _, done) => {
 
@@ -16,8 +17,15 @@ const apiDocsPlugin = fp((fastify, _, done) => {
     transform: jsonSchemaTransform,
   });
 
-  fastify.register(scalarApiReference, {
-    routePrefix: "/docs"
+  // fastify.register(scalarApiReference, {
+  //   routePrefix: "/docs"
+  // });
+
+  fastify.register(fastifySwaggerUI, {
+    routePrefix: "/docs",
+    theme: {
+      title: "Ollama Models API - Docs",
+    }
   });
 
   done();

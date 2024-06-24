@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^4.0.0",
     "@prisma/client": "5.15.0",
     "@scalar/fastify-api-reference": "^1.23.5",
     "cheerio": "^1.0.0-rc.12",
