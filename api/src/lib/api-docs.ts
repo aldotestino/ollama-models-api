@@ -3,11 +3,8 @@ import fastifySwagger from "@fastify/swagger";
 import { jsonSchemaTransform } from "fastify-type-provider-zod";
 import scalarApiReference from "@scalar/fastify-api-reference";
 
-// https://github.com/scalar/scalar/blob/main/documentation/fastify.md
-// use 'fastify-plugin' (fp) otherwise this will not run in the correct context
 const apiDocsPlugin = fp((fastify, _, done) => {
 
-  // TODO: setup tags (app, fastapi)
   fastify.register(fastifySwagger, {
     openapi: {
       info: {

@@ -12,7 +12,7 @@ export function createApi(fastifyOpts?: FastifyHttpOptions<Server, FastifyBaseLo
   fastify.setValidatorCompiler(validatorCompiler);
   fastify.setSerializerCompiler(serializerCompiler);
 
-  fastify.register(apiDocsPlugin);
+  // fastify.register(apiDocsPlugin);
 
   fastify.get("/", () => ({ message: "Welcome to Ollama Models API! 🦙🚀" }))
 
